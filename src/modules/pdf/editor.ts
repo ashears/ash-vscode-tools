@@ -59,7 +59,13 @@ export class PdfEditor implements vscode.CustomReadonlyEditorProvider<PdfDocumen
         if (!disposed) await panel.webview.postMessage({ type: 'error', message: errorMessage(error) });
       }
     };
-    let timer: NodeJS.Timeout | undefined;
+    let timer: NodeJS.Timeout | undefined, stateTimer: NodeJS.Timeout | undefined;
+    const saveState = () => {
+      delete this.remembered[document.uri.toString()];
+      this.remembered[document.uri.toString()] = view.state;
+      this.remembered = Object.fromEntries(Object.entries(this.remembered).slice(-100));
+      void this.context.workspaceState.update('pdf.views', this.remembered);
+    };
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(dirname(document.uri.fsPath), basename(document.uri.fsPath)));
     const refresh = () => {
       this.service.invalidate(); clearTimeout(timer);
@@ -72,7 +78,7 @@ export class PdfEditor implements vscode.CustomReadonlyEditorProvider<PdfDocumen
         if (message.type === 'ready') { view.ready = true; await load(); return; }
         if (message.type === 'viewState') {
           const next = validateState(message);
-          if (next) { view.state = next; }
+          if (next) { view.state = next; clearTimeout(stateTimer); stateTimer = setTimeout(saveState, 400); }
           return;
         }
         if (typeof message.type === 'string' && ['copySelection', 'copyPage', 'previewText', 'exportMarkdown', 'externalLink'].includes(message.type)) {
@@ -81,11 +87,8 @@ export class PdfEditor implements vscode.CustomReadonlyEditorProvider<PdfDocumen
         }
       })];
     panel.onDidDispose(() => {
-      disposed = true; clearTimeout(timer); this.views.delete(view);
-      delete this.remembered[document.uri.toString()];
-      this.remembered[document.uri.toString()] = view.state;
-      this.remembered = Object.fromEntries(Object.entries(this.remembered).slice(-100));
-      void this.context.workspaceState.update('pdf.views', this.remembered);
+      disposed = true; clearTimeout(timer); clearTimeout(stateTimer); this.views.delete(view);
+      saveState();
       registrations.forEach(item => item.dispose());
     });
     panel.webview.html = viewerHtml({ script: asset('webview.mjs'), css: asset('webview.css'), pdfCss: asset('pdfjs/pdf_viewer.css'),
@@ -98,7 +101,7 @@ export class PdfEditor implements vscode.CustomReadonlyEditorProvider<PdfDocumen
       if (view.document.uri.toString() !== uri.toString()) continue;
       view.state = { ...view.state, page };
       // Loading must restore this page even if the webview has not initialized.
-      view.pendingPage = page;
+      view.pendingPage = view.ready ? undefined : page;
       await view.panel.webview.postMessage({ type: 'goToPage', page });
     }
   }

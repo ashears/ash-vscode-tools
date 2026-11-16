@@ -42,7 +42,7 @@ bus.on('pagesinit', () => {
   viewer.pagesRotation = target.rotation;
   element('loading').hidden = true;
   requestAnimationFrame(() => {
-    viewer.currentPageNumber = Math.min(Math.max(target.page, 1), viewer.pagesCount);
+    viewer.currentPageNumber = Math.min(Math.max(restored.page, 1), viewer.pagesCount);
     loading = false; persist();
   });
 });
@@ -160,7 +160,7 @@ function zoom(value: string | number): void {
 element<HTMLSelectElement>('zoom').addEventListener('change', event => zoom((event.target as HTMLSelectElement).value));
 button('zoomIn', () => zoom(Math.min(4, viewer.currentScale * 1.2)));
 button('zoomOut', () => zoom(Math.max(0.25, viewer.currentScale / 1.2)));
-button('rotate', () => { if (documentProxy) { viewer.pagesRotation = (viewer.pagesRotation + 90) % 360; persist(); } });
+button('rotate', () => { if (documentProxy) { const page = viewer.currentPageNumber; viewer.pagesRotation = (viewer.pagesRotation + 90) % 360; viewer.currentPageNumber = page; persist(); } });
 button('sidebarToggle', () => { document.body.classList.toggle('no-sidebar'); window.dispatchEvent(new Event('resize')); });
 function tab(thumbnails: boolean): void {
   element('outline').hidden = thumbnails; element('thumbnails').hidden = !thumbnails;
@@ -186,7 +186,10 @@ window.addEventListener('message', event => {
   const message = event.data;
   if (message.type === 'load') void load(message.bytes, message.filename, message.state);
   if (message.type === 'error') { element('loading').hidden = false; element('loadingText').textContent = message.message; }
-  if (message.type === 'goToPage' && documentProxy) viewer.currentPageNumber = Math.min(viewer.pagesCount, Math.max(1, message.page));
+  if (message.type === 'goToPage' && Number.isInteger(message.page)) {
+    restored = { ...restored, page: Math.min(2000, Math.max(1, message.page)) };
+    if (documentProxy && !loading) viewer.currentPageNumber = Math.min(viewer.pagesCount, restored.page);
+  }
   if (message.type === 'copySelection') element('copySelection').click();
   if (message.type === 'status') status(message.message);
 });

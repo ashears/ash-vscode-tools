@@ -1,4 +1,4 @@
-import { downloadAndUnzipVSCode, runTests } from '@vscode/test-electron';
+import { downloadAndUnzipVSCode, runTests, runVSCodeCommand } from '@vscode/test-electron';
 import { execFileSync } from 'node:child_process';
 import { resolve, join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -12,9 +12,15 @@ const manifest = JSON.parse(await readFile('package.json', 'utf8'));
 const executable = process.env.VSCODE_EXECUTABLE_PATH || await downloadAndUnzipVSCode(process.env.VSCODE_VERSION || '1.137.0');
 const cli = process.platform === 'darwin' ? resolve(dirname(executable), '../Resources/app/out/cli.js') : resolve(dirname(executable), 'resources/app/out/cli.js');
 try {
-execFileSync(executable, [cli, '--user-data-dir', profile, '--extensions-dir', extensions, '--install-extension', resolve(`ash-vscode-tools-${manifest.version}.vsix`), '--force'], {
-  stdio: 'inherit', env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' },
-});
+const installArgs = ['--user-data-dir', profile, '--extensions-dir', extensions, '--install-extension', resolve(`ash-vscode-tools-${manifest.version}.vsix`), '--force'];
+if (process.env.VSCODE_EXECUTABLE_PATH && process.platform !== 'win32') {
+  execFileSync(executable, [cli, ...installArgs], { stdio: 'inherit', env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' } });
+} else {
+  // Use the distribution's official CLI wrapper on Windows: resources can be
+  // packaged differently across VS Code platforms and versions.
+  const result = await runVSCodeCommand(installArgs, { version: process.env.VSCODE_VERSION || '1.137.0', reuseMachineInstall: true });
+  console.log(result.stdout);
+}
 const installed = (await readdir(extensions)).find(name => name.startsWith(`${manifest.publisher}.${manifest.name}-`));
 if (!installed) throw new Error('VSIX was not installed into the clean profile.');
 await runTests({
