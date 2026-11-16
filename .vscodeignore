@@ -1,0 +1,14 @@
+**/*
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE
+!THIRD_PARTY_NOTICES.txt
+!dist/extension.cjs
+!dist/pdf-worker.mjs
+!dist/webview.mjs
+!dist/webview.css
+!dist/pdfjs/**
+!media/icon.png
+!media/demo.png
+!docs/**

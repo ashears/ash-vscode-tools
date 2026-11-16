@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+const manifest = JSON.parse(await readFile('package.json', 'utf8'));
+assert(manifest.publisher && manifest.publisher !== 'publisher-not-configured', 'Set your real Marketplace publisher ID in package.json before releasing.');
+assert.equal(process.env.GITHUB_REF_NAME, `v${manifest.version}`, 'Tag must match the manifest version.');
+assert.equal(process.env.GITHUB_EVENT_NAME, 'push', 'Publish only from an intentional tag push.');
+execFileSync('git', ['merge-base', '--is-ancestor', 'HEAD', 'origin/main']);
+assert.equal(execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim(), '', 'Release checkout must be clean.');
+console.log('Publisher, release version, clean checkout and main ancestry verified.');
