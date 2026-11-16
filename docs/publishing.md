@@ -7,6 +7,7 @@ The source repository is [ashears/ash-vscode-tools](https://github.com/ashears/a
 1. Sign into [Marketplace publisher management](https://marketplace.visualstudio.com/manage) with your Microsoft account. Complete any requested account onboarding and publisher agreement.
 2. Create a publisher. Choose an ID you want to keep, such as an available variation of your GitHub identity; this becomes part of the permanent extension identity `<publisher>.ash-vscode-tools`. The display name can differ.
 3. Set `publisher` in `package.json` to that exact ID. The placeholder `publisher-not-configured` allows local packaging but deliberately fails release validation. No domain purchase is needed; a verified-domain badge is optional and is not a requirement for this project.
+   When switching to the real publisher ID, uninstall the placeholder-identity development VSIX to avoid having two copies of the reader installed.
 4. Review author, repository links, description, icon, README screenshot, license, and changelog. Do not claim publication or installs before the listing exists.
 
 Read Microsoft's [publishing guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) for current account requirements.

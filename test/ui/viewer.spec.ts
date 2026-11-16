@@ -25,6 +25,14 @@ test('renders selectable pages, navigates outline, searches, rotates, and copies
   await expect(page.locator('.textLayer').first()).toContainText('250 milliseconds');
   await expect(page.locator('#outline')).toContainText('1. Retry policy');
   await page.screenshot({ path: 'media/demo.png' });
+  await page.locator('.textLayer').first().evaluate(node => {
+    const range = document.createRange(); range.selectNodeContents(node.querySelector('span')!);
+    const selection = window.getSelection()!; selection.removeAllRanges(); selection.addRange(range);
+  });
+  await page.getByRole('button', { name: 'Copy selection + citation', exact: true }).click();
+  const selected = await page.evaluate(() => (window as unknown as HarnessWindow).__messages.find(message => message.type === 'copySelection'));
+  expect(selected).toMatchObject({ startPage: 1, endPage: 1 });
+  expect(String(selected?.text)).toContain('ENGINEERING NOTES');
   await page.getByRole('button', { name: '2. Request budget' }).click();
   await expect(page.getByRole('spinbutton', { name: 'Page number' })).toHaveValue('2');
   await page.getByRole('button', { name: 'Previous page', exact: true }).click();

@@ -15,6 +15,12 @@ Environment: macOS Apple Silicon, Node 25.8.2/npm 11.11.1, VS Code 1.137.0, Chro
 - npm audit after a packaging-tool dependency override: zero known vulnerabilities.
 - A signed-in Copilot conversation and Marketplace publication have not been performed.
 
+## GitHub validation
+
+The [cross-platform CI run](https://github.com/ashears/ash-vscode-tools/actions/runs/43971563707) passed all four jobs: verification plus source and installed-VSIX smoke tests on Windows, Ubuntu Linux, and macOS. The initial [CodeQL analysis](https://github.com/ashears/ash-vscode-tools/actions/runs/43971009263) also passed. Later commit results remain visible in the repository's Actions tab.
+
+The first Windows package-test run exposed a test-harness CLI-path assumption; using VS Code's official wrapper resolved it. Browser tests additionally verify selection-to-context messages and preserve the page during rapid navigation/zoom/reload.
+
 These are functional checks, not an exhaustive security audit or proof of reliable extraction for every PDF. The screenshot in the README is captured from the packaged viewer in the browser harness.
 
 ## Pending launch checks
