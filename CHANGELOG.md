@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Shortened the Marketplace overview and clarified how to open a PDF and use it with Copilot.
+
 ## 0.1.0 — Initial release
 
 - Modular extension scaffold with a local, read-only PDF utility.

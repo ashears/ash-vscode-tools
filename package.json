@@ -1,8 +1,8 @@
 {
   "name": "ash-vscode-tools",
   "displayName": "Ash VS Code Tools",
-  "description": "Local PDF reading and page-cited Copilot tools in a modular developer toolkit.",
-  "version": "0.1.0",
+  "description": "Read PDFs in VS Code and give Copilot passages with page numbers.",
+  "version": "0.1.1",
   "publisher": "AshtonShears",
   "author": "Ashton Shears",
   "license": "MIT",
