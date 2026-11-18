@@ -23,12 +23,15 @@ The first Windows package-test run exposed a test-harness CLI-path assumption; u
 
 These are functional checks, not an exhaustive security audit or proof of reliable extraction for every PDF. The screenshot in the README is captured from the packaged viewer in the browser harness.
 
-## Pending launch checks
+## Publication — November 17, 2026
 
-- Marketplace publisher **AshtonShears** is created and configured in the manifest.
-- The `marketplace` GitHub environment and workflow-specific Marketplace trusted-publishing policy are active.
-- Verify a signed-in Copilot response against the two-page reference fixture.
-- Publish 0.1.0, inspect Marketplace validation, and install the published listing.
+- [Version 0.1.0](https://marketplace.visualstudio.com/items?itemName=AshtonShears.ash-vscode-tools) is public under **AshtonShears**. Microsoft Marketplace verification completed and the listing's Install action is available.
+- The [tagged publishing workflow](https://github.com/ashears/ash-vscode-tools/actions/runs/44252294442) passed validation and published through the workflow-specific OIDC policy, without a stored publishing PAT.
+- The [GitHub release](https://github.com/ashears/ash-vscode-tools/releases/tag/v0.1.0) contains the published VSIX.
+- A fresh install of `AshtonShears.ash-vscode-tools@0.1.0` downloaded from Marketplace into a temporary profile passed the extension-host smoke tests on macOS. Publisher/version, commands, PDF editor, and direct PDF-tool invocation were verified.
+- Before publication, all 20 unit/security-policy tests, five browser scenarios, and source/installed-VSIX checks on Windows, Ubuntu, and macOS passed on the release PR. CodeQL passed.
+
+Remaining manual verification: a signed-in Copilot conversation against the reference fixture. Automated tool invocation is verified; no model-generated answer is claimed as tested.
 
 ## Release audit review — November 17, 2026
 

@@ -7,6 +7,10 @@ A developer toolkit I maintain for my own workflow. One extension, distinct util
 
 **Version:** 0.1.0 · **Publisher:** AshtonShears · **Extension ID:** `AshtonShears.ash-vscode-tools`
 
+[Install from Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AshtonShears.ash-vscode-tools) · [Download the release VSIX](https://github.com/ashears/ash-vscode-tools/releases/tag/v0.1.0)
+
+In VS Code, search Extensions for `@id:AshtonShears.ash-vscode-tools`, or run `code --install-extension AshtonShears.ash-vscode-tools`.
+
 ![PDF reader showing the original technical-reference fixture](media/demo.png)
 
 ## PDF reading
