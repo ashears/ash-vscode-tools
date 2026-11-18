@@ -3,7 +3,7 @@
   "displayName": "Ash VS Code Tools",
   "description": "Local PDF reading and page-cited Copilot tools in a modular developer toolkit.",
   "version": "0.1.0",
-  "publisher": "publisher-not-configured",
+  "publisher": "AshtonShears",
   "author": "Ashton Shears",
   "license": "MIT",
   "engines": {

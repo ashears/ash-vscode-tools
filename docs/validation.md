@@ -25,7 +25,7 @@ These are functional checks, not an exhaustive security audit or proof of reliab
 
 ## Pending launch checks
 
-- Create the Marketplace publisher and set its ID.
-- Configure the `marketplace` GitHub environment and Marketplace trusted-publishing policy.
+- Marketplace publisher **AshtonShears** is created and configured in the manifest.
+- The `marketplace` GitHub environment is configured; the Marketplace trusted-publishing policy must be saved before release.
 - Verify a signed-in Copilot response against the two-page reference fixture.
 - Publish 0.1.0, inspect Marketplace validation, and install the published listing.
