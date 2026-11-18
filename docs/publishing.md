@@ -1,6 +1,6 @@
 # Publish your first VS Code extension
 
-The source repository is [ashears/ash-vscode-tools](https://github.com/ashears/ash-vscode-tools). The remaining external prerequisite is your Marketplace publisher identity. No Marketplace account or listing is created automatically by this repository.
+The source repository is [ashears/ash-vscode-tools](https://github.com/ashears/ash-vscode-tools). Its Marketplace publisher ID is **AshtonShears**. The repository does not automatically create a Marketplace account or trusted-publishing policy.
 
 ## 1. Create the publisher
 

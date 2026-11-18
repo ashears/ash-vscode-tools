@@ -25,7 +25,11 @@ These are functional checks, not an exhaustive security audit or proof of reliab
 
 ## Pending launch checks
 
-- Create the Marketplace publisher and set its ID.
-- Configure the `marketplace` GitHub environment and Marketplace trusted-publishing policy.
+- Marketplace publisher **AshtonShears** is created and configured in the manifest.
+- The `marketplace` GitHub environment and workflow-specific Marketplace trusted-publishing policy are active.
 - Verify a signed-in Copilot response against the two-page reference fixture.
 - Publish 0.1.0, inspect Marketplace validation, and install the published listing.
+
+## Release audit review — November 17, 2026
+
+The full audit now reports GHSA-fc5q-39xc-vjpf through development tooling. The production audit remains clean. With the owner's approval, CI uses the exact, development-only, expiring exception documented in `SECURITY.md`. This updates the November 16 audit snapshot above; a clean full audit is no longer claimed. The policy continues blocking every other moderate-or-higher advisory.

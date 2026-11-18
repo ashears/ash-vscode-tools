@@ -19,3 +19,11 @@ PDF text and metadata can contain prompt injection. Tool output labels them untr
 Dependabot covers npm and Actions. CI runs lint, types, tests, package checks, and npm audit. CodeQL scans TypeScript/JavaScript. Public-repository secret protection should be enabled in GitHub settings. Actions use immutable references and least-privilege permissions; PR jobs do not receive publishing credentials. Tagged releases are validated for version and `main` ancestry. Marketplace publishing uses a workflow-bound OIDC policy rather than a long-lived PAT.
 
 An extension you maintain is not automatically safe. Review upstream dependencies, restrict who can change workflows/tags, and keep your GitHub and Microsoft accounts protected with MFA.
+
+## Temporary development dependency exception
+
+The owner approved an exception for [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf), a high-severity repeated-extglob denial of service in **picomatch 4.0.7**, on November 17, 2026. The advisory has no patched release at approval time. This dependency is used by build/test/packaging tools and is excluded from the VSIX. Current glob patterns are repository-controlled; a crafted pattern can still hang tooling. CI jobs have timeouts and untrusted PR jobs receive no publishing credentials.
+
+`npm run audit` separately audits production dependencies with no exceptions, then checks the full dependency report. Only this exact advisory, at the reviewed version and on lockfile paths marked development-only, plus entries inheriting solely that advisory, can pass. Every other moderate-or-higher advisory blocks. Registry/report errors fail closed. Standard `npm audit` continues to report the issue; the custom check prints the accepted exception explicitly.
+
+The exception expires **December 1, 2026 at 00:00 America/Los_Angeles** (`2026-12-01T08:00:00Z`). Builds fail for this advisory after that deadline; installed extensions are unaffected. Remove the exception after updating to a patched upstream release. A new version, expanded production exposure, different advisory, or changed risk requires another review. The policy is in `scripts/audit-policy.mjs`, with tests for expiry, production exposure, new advisories, malformed reports, and dependency cycles.

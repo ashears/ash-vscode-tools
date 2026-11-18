@@ -21,7 +21,7 @@ if (process.env.VSCODE_EXECUTABLE_PATH && process.platform !== 'win32') {
   const result = await runVSCodeCommand(installArgs, { version: process.env.VSCODE_VERSION || '1.137.0', reuseMachineInstall: true });
   console.log(result.stdout);
 }
-const installed = (await readdir(extensions)).find(name => name.startsWith(`${manifest.publisher}.${manifest.name}-`));
+const installed = (await readdir(extensions)).find(name => name.toLowerCase().startsWith(`${manifest.publisher}.${manifest.name}-`.toLowerCase()));
 if (!installed) throw new Error('VSIX was not installed into the clean profile.');
 await runTests({
   // VS Code requires a development path to dispatch --extensionTestsPath. Point
