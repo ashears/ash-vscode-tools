@@ -5,7 +5,7 @@ A developer toolkit I maintain for my own workflow. One extension, distinct util
 [![CI](https://github.com/ashears/ash-vscode-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/ashears/ash-vscode-tools/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/ashears/ash-vscode-tools/actions/workflows/codeql.yml/badge.svg)](https://github.com/ashears/ash-vscode-tools/actions/workflows/codeql.yml)
 
-**Status:** 0.1.0 release candidate under publisher **AshtonShears**; first Marketplace publication is pending.
+**Version:** 0.1.0 · **Publisher:** AshtonShears · **Extension ID:** `AshtonShears.ash-vscode-tools`
 
 ![PDF reader showing the original technical-reference fixture](media/demo.png)
 

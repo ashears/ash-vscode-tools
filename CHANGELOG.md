@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — Initial implementation (not yet published)
+## 0.1.0 — Initial release
 
 - Modular extension scaffold with a local, read-only PDF utility.
 - PDF reading, outline, thumbnails, search, zoom, rotation, refresh, and view state.
