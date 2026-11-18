@@ -22,7 +22,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run release:check
       - run: npm run check
-      - run: npm audit --audit-level=moderate
+      - run: npm run audit
       - run: npx playwright install --with-deps chromium
       - run: npm run test:ui
       - run: xvfb-run -a npm run test:host
@@ -47,6 +47,7 @@ jobs:
           node-version-file: .nvmrc
       - run: npm ci --ignore-scripts
       - run: npm run release:check
+      - run: npm run audit
       - run: npm run package
       - run: node scripts/check-vsix.mjs
       - name: Publish the verified VSIX

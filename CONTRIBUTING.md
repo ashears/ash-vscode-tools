@@ -16,6 +16,8 @@ The shared core is intentionally small. Add shared code only when at least two m
 
 Review each Dependabot PR's upstream diff, release notes, license changes, lifecycle scripts, and transitive dependencies. Keep action references pinned to full SHAs with a readable version comment. No automated merges or releases from dependency PRs. `@vscode/vsce` currently needs a patched `minimatch` override; remove it once upstream's supported range includes the fix and package verification passes.
 
+Run `npm run audit` for the release audit policy. Its single, temporary development-only picomatch exception is documented in `SECURITY.md`; do not replace this with a blanket audit bypass. Standard `npm audit` still shows the acknowledged advisory.
+
 ## Original fixtures
 
 Run `npm run fixtures` to regenerate the synthetic PDFs and code-drawn icon. Fixtures are original MIT-licensed material, with no private documents. PDF creation timestamps may change; regeneration should be deliberate. `protected.pdf` uses password `test-password` solely to exercise the unsupported-file path. `npm run test:ui` captures `media/demo.png` from the real viewer.

@@ -203,7 +203,8 @@
     "package": "vsce package --no-dependencies",
     "release:check": "node scripts/release-check.mjs",
     "test:installed": "node scripts/test-installed.mjs",
-    "build:debug": "node scripts/build.mjs --sourcemap"
+    "build:debug": "node scripts/build.mjs --sourcemap",
+    "audit": "node scripts/audit.mjs"
   },
   "dependencies": {
     "pdfjs-dist": "6.5.438"
